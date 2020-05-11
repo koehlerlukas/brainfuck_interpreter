@@ -25,10 +25,11 @@ class BrainfuckInterpreter:
 
     def _execute(self):
         for i in range(len(self._script)):
-            self._debug.append(("State: i =", i, ", script[i] =", self._script[i], ", pointer =", self._pointer, "cells[pointer] =", self._cells[self._pointer]))
+            state = "State: i = " + str(i) + ", script[i] = " + str(self._script[i]) + ", pointer = " + str(self._pointer) + ", cells[pointer] = " + str(self._cells[self._pointer])
+            self._debug.append(state)
             if self._script[i] == '>':
                 self._pointer += 1
-                if len(self._cells) == self._pointer:
+                if len(self._cells) ==  self._pointer:
                     self._cells.append(0)
 
             elif self._script[i] == '<':
@@ -45,41 +46,32 @@ class BrainfuckInterpreter:
 
             elif self._script[i] == '.':
                 if len(self._cells) > self._pointer:
-                    print(chr(self._cells[self._pointer]))
+                    print(self._cells[self._pointer])
 
             elif self._script[i] == ',':
                 self._cells[self._pointer] = ord(readchar.readchar())
 
             elif self._script[i] == '[':
-                i = self._start_loop(i)
+                if self._cells[self._pointer] == 0:
+                    while i < len(self._script) and self._script[i] != ']':
+                        i += 1
+                    if i < len(self._script) and self._script[i] == ']':
+                        i += 1
 
             elif self._script[i] == ']':
-                i = self._end_loop(i)
+                if self._cells[self._pointer] != 0:
+                    while self._script[i] != '[' and i > 0:
+                        i -= 1
+                
+            
             i += 1
 
-    
-    def _start_loop(self, curr_pos: int) -> int:
-        if self._cells[self._pointer] == 0:
-            while curr_pos < len(self._script) - 1 and self._script[curr_pos] != ord(']'):
-                curr_pos += 1
-            if curr_pos < len(self._script) - 1 and self._script[curr_pos] == ord(']'): 
-                curr_pos += 1
-    
-        return curr_pos
-
-
-
-    def _end_loop(self, curr_pos: int) -> int:
-        if self._cells[self._pointer] != 0:
-            while self._script[curr_pos] != ord('[') and curr_pos > 0:
-                curr_pos -= 1
-
-        return curr_pos
 
     def run(self):
         self._execute()
         with open('./debug.txt', "w") as f:
-            
+            for line in self._debug:
+                f.write(line + "\n")
         
 
 def main():
