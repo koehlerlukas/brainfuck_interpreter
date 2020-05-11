@@ -1,5 +1,4 @@
-Copied from the german wikipedia entry for brainfuck: https://de.wikipedia.org/wiki/Brainfuck
-  ++++++++++
+  ,++++++++++
  [
   >+++++++>++++++++++>+++>+<<<<-
  ]                       Schleife zur Vorbereitung der Textausgabe
@@ -17,3 +16,5 @@ Copied from the german wikipedia entry for brainfuck: https://de.wikipedia.org/w
  >+.                     '!'
  >.                      Zeilenvorschub
  +++.                    Wagenrücklauf
+
+Copied from the german wikipedia entry for brainfuck: https://de.wikipedia.org/wiki/Brainfuck
