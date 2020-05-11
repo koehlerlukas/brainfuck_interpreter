@@ -1,4 +1,4 @@
-  ,++++++++++
+  ++++++++++
  [
   >+++++++>++++++++++>+++>+<<<<-
  ]                       Schleife zur Vorbereitung der Textausgabe
