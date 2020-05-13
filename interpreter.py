@@ -8,6 +8,18 @@ class BrainfuckInterpreter:
         self._cells = [0]
         self._script = self._read_script(input_script)
     
+    def _check_code(self, code):
+        brackets = 0
+        for c in code:
+            if c == '[':
+                brackets += 1
+            elif c == ']':
+                brackets -= 1
+            
+            if brackets < 0 or brackets > 1:
+                print('Two dimensional loop not yet implemented.')
+                exit(1)
+
     def _read_script(self, input_script: str) -> list:
         allowed_operators = ['>', '<', '+', '-', '.', ',', '[', ']']
         result = []
@@ -19,6 +31,8 @@ class BrainfuckInterpreter:
         except Exception:
             print('Error reading input file.')
             exit(1)
+
+        self._check_code(result)
         return result
 
     def _execute(self):
