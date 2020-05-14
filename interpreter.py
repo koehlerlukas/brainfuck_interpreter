@@ -39,6 +39,7 @@ class BrainfuckInterpreter:
         
         opening = -1
         closing = -1 
+        is_bracket = False
         
         i = 0
         while i < len(self._script):
@@ -46,7 +47,7 @@ class BrainfuckInterpreter:
             if self._script[i] == '>':
                 self._pointer += 1
                 if len(self._cells) == self._pointer:
-                    self._cells.append(0)
+                    self._cells.append(0) 
 
             elif self._script[i] == '<':
                 self._pointer = 0 if self._pointer <= 0 else self._pointer - 1
@@ -58,7 +59,7 @@ class BrainfuckInterpreter:
                 self._cells[self._pointer] -=  1
 
             elif self._script[i] == '.':
-                print(chr(self._cells[self._pointer]))
+                print(chr(self._cells[self._pointer]), end='')
 
             elif self._script[i] == ',':
                 self._cells[self._pointer] = ord(readchar.readchar())
@@ -67,12 +68,17 @@ class BrainfuckInterpreter:
                 opening = i
                 if self._cells[self._pointer] == 0 and closing != -1:
                     i = closing + 1
+                    is_bracket = True
 
             elif self._script[i] == ']':
                 closing = i 
                 if self._cells[self._pointer] != 0 and opening != -1:
                     i = opening + 1
-            i += 1
+                    is_bracket = True
+            
+            if not is_bracket:
+                i += 1
+            is_bracket = False
 
     def run(self):
         self._execute()
